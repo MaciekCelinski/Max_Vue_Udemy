@@ -4,12 +4,13 @@
     <p>Many Details</p>
     <p>User Name: {{ switchName() }}</p>
     <p>User Age: {{ userAge }}</p>
-    <button @click="resetName" class="btn btn-danger">Reset Name</button>
-    <button @click="resetFn()" class="btn btn-danger">Reset Name</button>
+    <button @click="resetName" class="btn btn-danger mx-1">Reset Name</button>
+    <button @click="resetFn()" class="btn btn-danger mx-1">Reset Name</button>
   </div>
 </template>
 
 <script>
+import { eventBuss } from "../main";
 export default {
   props: {
     // myName: [String, Array]
@@ -31,8 +32,12 @@ export default {
     },
     resetName() {
       this.myName = "Maciek";
-      this.$emit("nameWasReset", this.myName);
     }
+  },
+  created() {
+    eventBuss.$on("ageWasEdited", age => {
+      this.userAge = age;
+    });
   }
 };
 </script>

@@ -9,15 +9,10 @@
       <div class="col-sm-6">
         <!-- :name = "name" -> PROP -->
         <!-- listening to the event nameWasReset and changing name to sended value -->
-        <app-user-detail
-          :myName="name"
-          @nameWasReset="name=$event"
-          :resetFn="resetName"
-          :userAge="age"
-        ></app-user-detail>
+        <app-user-detail :myName="name" :resetFn="resetName" :userAge="age"></app-user-detail>
       </div>
       <div class="col-sm-6">
-        <app-user-edit :userAge="age" @ageWasEdited="age=$event"></app-user-edit>
+        <app-user-edit :userAge="age"></app-user-edit>
       </div>
     </div>
   </div>
