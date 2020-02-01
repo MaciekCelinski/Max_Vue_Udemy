@@ -7,12 +7,16 @@
 				<button @click="selectedComponent = 'appNew' ">New</button>
 				<hr>
 				<p>{{selectedComponent}}</p>
-				<!-- dynamic content will show in a slot if there is one -->
-				<component :is="selectedComponent">Default Content</component>
+				<keep-alive>
+					<!-- dynamic content will show in a slot if there is one -->
+					<component :is="selectedComponent">Default Content</component>
+
+				</keep-alive>
 				<!-- <app-quote> -->
 				<!-- <h2 slot="title">{{ quoteTitle }}</h2> -->
 				<!-- <p>A wonderfull Life</p> -->
 				<!-- </app-quote> -->
+
 			</div>
 		</div>
 	</div>
@@ -26,9 +30,9 @@
     export default {
         data() {
             return {
-                quoteTitle: 'The Qoute',
-//default selected component
-                selectedComponent: 'appQoute'
+                quoteTitle: 'The Quote',
+				//default selected component
+                selectedComponent: 'appQuote'
             }
         },
         components: {

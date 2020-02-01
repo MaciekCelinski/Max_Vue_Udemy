@@ -31,7 +31,8 @@
     ],
     "rules": {
       "no-mixed-spaces-and-tabs": 0,
-      "vue/no-unused-components": false
+      "vue/no-unused-components": false,
+      "no-console": "off"
     },
     "parserOptions": {
       "parser": "babel-eslint"
