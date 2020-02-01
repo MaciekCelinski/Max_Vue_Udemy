@@ -1,5 +1,9 @@
 <template>
-	<h3>New Quote</h3>
+	<div>
+		<h3>New Quote</h3>
+		<slot></slot>
+	</div>
+
 </template>
 
 <script>
