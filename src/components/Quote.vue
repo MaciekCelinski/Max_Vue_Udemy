@@ -1,12 +1,15 @@
 <template>
 	<div class="container">
-	<div class="title">
-		<slot name="title"></slot>
-	</div>
-	<hr/>
-	<div>
-		<slot name="content"></slot>
-	</div>
+		<div class="title">
+			<slot name="title"></slot>
+			<!-- if we use the slot below default text will disappear -->
+			<span style="color: #ccc"><slot name="subtitle">The Subtitle</slot></span>
+		</div>
+		<hr/>
+		<div>
+			<!-- if a slot is not named than everything that don't have a name will go there -->
+			<slot></slot>
+		</div>
 	</div>
 </template>
 
