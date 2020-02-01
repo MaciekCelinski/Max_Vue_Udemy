@@ -1,29 +1,21 @@
 <template>
   <div class="container">
     <div class="row">
-      <div class="col">
-        <app-user></app-user>
+      <div class="col-xs-12">
+
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import User from "./components/User.vue";
+
 
 export default {
-  components: {
-    appUser: User
-  }
+
 };
 </script>
 
 <style>
-.container {
-  padding: 0;
-}
-div.component {
-  border: 1px solid black;
-  padding: 30px;
-}
+
 </style>
