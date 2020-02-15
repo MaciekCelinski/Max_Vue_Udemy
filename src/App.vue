@@ -3,6 +3,10 @@
 		<div class="row">
 			<div class="col-xs-12 col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3">
 				<h1>Filters and Mixins</h1>
+				<!-- local filter -->
+				<p>{{text | toUppercase }}</p>
+				<!-- global filter from main.js -->
+				<p>{{ text2 | to-lowercase }}</p>
 			</div>
 		</div>
 	</div>
@@ -10,7 +14,17 @@
 
 <script>
     export default {
-        data(){}
+        data() {
+            return {
+                text: "Hello there!",
+                text2: "I'm here too"
+            }
+        },
+        filters: {
+            toUppercase(value) {
+                return value.toUpperCase();
+            }
+        }
     }
 </script>
 
