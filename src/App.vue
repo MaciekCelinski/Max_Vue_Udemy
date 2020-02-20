@@ -4,19 +4,41 @@
 			<div class="col-xs-12 col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3">
 				<h1>Animations</h1>
 				<hr>
+				<select class="form-control" v-model="alertAnimation">
+					<option value="fade">Fade</option>
+					<option value="slide">Slide</option>
+				</select>
+				<br>
 				<button class="btn btn-primary" @click="showInfo=!showInfo">
 					Show Alert
 				</button>
 				<br>
 				<br>
-				<transition name="fade">
+				<!-- <transition appear :name='alertAnimation'>
+					<div class="alert alert-info" v-show="showInfo">
+						This is some info
+					</div>
+				</transition> -->
+				<!-- <transition name="slide" type="animation">
 					<div class="alert alert-info" v-if="showInfo">
 						This is some info
 					</div>
 				</transition>
-				<transition name="slide">
+				<transition
+					enter-active-class="animated bounce"
+					leave-active-class="animated shake"
+				>
 					<div class="alert alert-info" v-if="showInfo">
 						This is some info
+					</div>
+				</transition> -->
+				<!-- out-in - first one out than second in ... in-out fitsr scond in than first out -->
+				<transition appear :name='alertAnimation' mode="out-in">
+					<div class="alert alert-info" v-if="showInfo" key="info">
+						This is some info
+					</div>
+					<div class="alert alert-warning" v-else key="warning">
+						This is some Warning
 					</div>
 				</transition>
 			</div>
@@ -28,7 +50,8 @@
     export default {
         data() {
             return {
-                showInfo: false
+				showInfo: true,
+				alertAnimation: "fade"
             }
         }
     }
@@ -40,7 +63,7 @@
 	}
 
 	.fade-enter-active {
-		transition: opacity 0.5s;
+		transition: opacity 1s;
 	}
 
 	.fade-leave {
@@ -48,16 +71,18 @@
 	}
 
 	.fade-leave-active {
-		transition: opacity 0.5s;
+		transition: opacity 1s;
 		opacity: 0;
 	}
 
 	.slide-enter {
+		opacity: 0;
 		/*transform: translateY(20px);*/
 	}
 
 	.slide-enter-active {
-		animation: slide-in 0.5s ease-out forwards;
+		animation: slide-in 1s ease-out forwards;
+		transition: opacity 1s;
 	}
 
 	.slide-leave {
@@ -65,7 +90,9 @@
 	}
 
 	.slide-leave-active {
-		animation: slide-out 0.5s ease-out forwards;
+		animation: slide-out 1s ease-out forwards;
+		transition: opacity 1s;
+		opacity: 0
 	}
 
 	@keyframes slide-in {
