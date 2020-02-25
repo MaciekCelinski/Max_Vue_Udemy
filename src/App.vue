@@ -43,99 +43,127 @@
 				</transition>
 				<hr>
 				<button class="btn btn-primary" @click="load = !load">Load / Remove Element</button>
-				<br />
-				<br />
+				<br/>
+				<br/>
 				<transition
 					@before-enter="beforeEnter"
 					@enter="enter"
 					@after-enter="afterEnter"
 					@enter-cancelled="enterCancelled"
-					
+
 					@before-leave="beforeLeave"
 					@leave="leave"
 					@after-leave="afterLeave"
 					@leave-cancelled="leaveCancelled"
 					:css="false"
-					>
+				>
 					<div style="width:450px; height: 100px; background-color: lightgreen" v-if="load"></div>
 				</transition>
 				<hr>
-				<button class="btn btn-primary" @click="selectedComponent == 'app-success-alert' ? selectedComponent = 'app-danger-alert' : selectedComponent='app-success-alert'">Toggle Component</button>
+				<button class="btn btn-primary"
+				        @click="selectedComponent == 'app-success-alert' ? selectedComponent = 'app-danger-alert' : selectedComponent='app-success-alert'">
+					Toggle Component
+				</button>
 				<br>
 				<br>
 				<transition name='fade' mode="out-in">
 					<component :is=selectedComponent></component>
 				</transition>
-				
+				<hr/>
+				<button class="btn btn-primary" @click='addItem'>Add Item</button>
+				<br/>
+				<br/>
+				<ul class="list-group">
+					<li
+						class="list-group-item"
+						v-for="number in numbers"
+						@click="deleteItem(index)"
+						style="cursor: pointer"
+					>{{number}}
+					</li>
+				</ul>
 			</div>
 		</div>
 	</div>
 </template>
 
 <script>
-import DangerAlert from "./DangerAlert.vue";
-import SuccessAlert from "./SuccessAlert.vue";
+    import DangerAlert from "./DangerAlert.vue";
+    import SuccessAlert from "./SuccessAlert.vue";
+
     export default {
         data() {
             return {
-				showInfo: true,
-				load: true,
-				alertAnimation: "fade",
-				elementWidth: 100,
-				selectedComponent: 'app-success-alert'
+                showInfo: true,
+                load: true,
+                alertAnimation: "fade",
+                elementWidth: 100,
+                selectedComponent: 'app-success-alert',
+                numbers: [1, 2, 3, 4, 5]
             }
-		},
-		methods: {
-			beforeEnter(el){
-				console.log('beforeEnter');
-				this.elementWidth = 100;
-				el.style.width = this.elementWidth + 'px'
-			},
-			enter(el, done){
-				console.log('enter')
-				let round = 1
-				const interval = setInterval(()=> {
-					el.style.width = (this.elementWidth + round * 10) + 'px';
-					round++;
-					if (round > 35) {clearInterval(interval)}
-					done();
-				}, 20)
-			},
-			afterEnter(el){
-				console.log('afterEnter')
-			},
-			enterCancelled(el){
-				console.log('enterCancelled')
-			},
-			beforeLeave(el){
-				console.log('beforeLeave')
-				this.elementWidth = 450
-				el.style.width = this.elementWidth + 'px'
+        },
+        methods: {
+            beforeEnter(el) {
+                console.log('beforeEnter');
+                this.elementWidth = 100;
+                el.style.width = this.elementWidth + 'px'
+            },
+            enter(el, done) {
+                console.log('enter')
+                let round = 1
+                const interval = setInterval(() => {
+                    el.style.width = (this.elementWidth + round * 10) + 'px';
+                    round++;
+                    if (round > 35) {
+                        clearInterval(interval)
+                    }
+                    done();
+                }, 20)
+            },
+            afterEnter(el) {
+                console.log('afterEnter')
+            },
+            enterCancelled(el) {
+                console.log('enterCancelled')
+            },
+            beforeLeave(el) {
+                console.log('beforeLeave')
+                this.elementWidth = 450
+                el.style.width = this.elementWidth + 'px'
 
-			},
-			leave(el, done){
-				console.log('leave')
-				let round = 1
-				const interval = setInterval(()=> {
-					el.style.width = (this.elementWidth - round * 10) + 'px';
-					round++;
-					if (round > 35) {clearInterval(interval)}
-					done();
-				}, 20)
-			},
-			afterLeave(el){
-				console.log('afterLeave')
-				this.elementWidth = 100;
-				el.style.width = this.elementWidth + 'px'
-			},
-			leaveCancelled(el){
-				console.log('leaveCancelled')
-			}
-		},
-		components : {
-			appDangerAlert: DangerAlert,
-			appSuccessAlert: SuccessAlert
-		}
+            },
+            leave(el, done) {
+                console.log('leave')
+                let round = 1
+                const interval = setInterval(() => {
+                    el.style.width = (this.elementWidth - round * 10) + 'px';
+                    round++;
+                    if (round > 35) {
+                        clearInterval(interval)
+                    }
+                    done();
+                }, 20)
+            },
+            afterLeave(el) {
+                console.log('afterLeave')
+                this.elementWidth = 100;
+                el.style.width = this.elementWidth + 'px'
+            },
+            leaveCancelled(el) {
+                console.log('leaveCancelled')
+            },
+            addItem() {
+                const pos = Math.floor(Math.random() * this.numbers.length)
+                this.numbers.splice(pos, 0, this.numbers.length + 1)
+            },
+            deleteItem(index) {
+                this.numbers.splice(index, 1)
+            }
+        },
+        components: {
+            appDangerAlert: DangerAlert,
+            appSuccessAlert: SuccessAlert
+        }
     }
 </script>
 
