@@ -32,7 +32,12 @@
                 </transition>
                 <!--        SELECTED ANIMATION    AND TYPE   -->
                 <transition :name="alertAnimation" appear>
-                    <div class="alert alert-warning" v-show="show" >This is FADE info - simple transition</div>
+                    <div class="alert alert-warning" v-show="show" >This is SELECTED ANIMATION info</div>
+                </transition>
+                <!--        TRANSITION BETWEEN MULTIPLE ELEMENTS        -->
+                <transition name="fade" mode="out-in" appear>
+                    <div class="alert alert-info" v-if="show" key="1">This is TRANSITION BETWEEN MULTIPLE ELEMENTS info - element 1</div>
+                    <div class="alert alert-danger" v-else key="2">This is TRANSITION BETWEEN MULTIPLE ELEMENTS info - element 2</div>
                 </transition>
             </div>
         </div>
@@ -56,13 +61,13 @@
         opacity: 0;
     }
     .fade-enter-active {
-        transition: opacity 0.4s;
+        transition: opacity 1s;
     }
     .fade-leave{
         /*opacity: 1;*/
     }
     .fade-leave-active{
-        transition: opacity 0.4s;
+        transition: opacity 1s;
         opacity: 0;
     }
     /* ---------------- SLIDE - mixed transition and animation -----------------*/
@@ -78,7 +83,7 @@
     }
     .slide-leave-active{
         animation: slide-out 1s ease-out forwards;
-        transition: opacity 3s;
+        transition: opacity 1s;
         opacity: 0
     }
     @keyframes slide-in {
