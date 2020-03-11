@@ -81,6 +81,24 @@
 				<transition name="fade" mode="out-in">
 					<component :is="selectedComponent"></component>
 				</transition>
+				<!--        Group Transition        -->
+				<button class="btn btn-success" @click="addItem">
+					Add Item
+				</button>
+				<br>
+				<br>
+				<ul class="list-group">
+					<transition-group name="slide">
+						<li class="list-group-item"
+						    v-for="(number, index) in numbers"
+						    @click="removeItem(index)"
+						    style="cursor: pointer"
+						    :key='number'
+						>
+							{{number}}
+						</li>
+					</transition-group>
+				</ul>
 			</div>
 		</div>
 	</div>
@@ -97,7 +115,8 @@
 				load: true,
 				alertAnimation: 'fade',
 				elementWidth: 100,
-				selectedComponent: 'app-success-alert'
+				selectedComponent: 'app-success-alert',
+				numbers: [1, 2, 3, 4, 5]
 			}
 		},
 		components: {
@@ -150,6 +169,20 @@
 			},
 			leaveCancelled(el) {
 				console.log('leaveCancelled')
+			},
+			addItem() {
+				// const newItem = this.numbers.length +1
+				// this.numbers.push(newItem)
+				// Max way
+				const pos = Math.floor(Math.random() * this.numbers.length)
+				// splice can be used to add elements .splice(start, del, add)
+				//this.numbers.splice(pos, 0, this.numbers.length)
+
+                                const addNum = Math.max(...this.numbers) + 1;
+				this.numbers.splice(pos, 0, addNum);
+			},
+			removeItem(index) {
+				this.numbers.splice(index, 1)
 			}
 		}
 	}
@@ -188,10 +221,26 @@
 	.slide-leave {
 	}
 
-	.slide-leave-active {
-		animation: slide-out 1s ease-out forwards;
-		transition: opacity 1s;
-		opacity: 0
+                /*    when we don't have group items     */
+
+	/*.slide-leave-active {*/
+	/*	animation: slide-out 1s ease-out forwards;*/
+	/*	transition: opacity 1s;*/
+	/*	opacity: 0*/
+	/*}*/
+
+                 /*    when we have group items    */
+
+        .slide-leave-active {
+            animation: slide-out 1s ease-out forwards;
+            transition: opacity 1s;
+            opacity: 0;
+            position: absolute;
+        }
+
+	/* slide-move - only for group items*/
+	.slide-move {
+		transition: transform 1s;
 	}
 
 	@keyframes slide-in {
