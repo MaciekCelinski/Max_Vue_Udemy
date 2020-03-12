@@ -11,13 +11,6 @@
     "bootstrap": "^3.3.7",
     "vue": "^2.0.1"
   },
-"eslintConfig": {
-    "rules": {
-      "no-mixed-spaces-and-tabs": 0,
-      "vue/no-unused-components": false,
-      "no-console": "off"
-    },
-},
   "devDependencies": {
     "babel-core": "^6.0.0",
     "babel-loader": "^6.0.0",
