@@ -5,23 +5,28 @@
 				<h1>Http</h1>
 				<div class="div form-group">
 					<label>Username</label>
-					<input class="form-control" type="text" v-model="user.username" />
+					<input class="form-control" type="text" v-model="user.username"/>
 				</div>
 				<div class="div form-group">
 					<label>Email</label>
-					<input class="form-control" type="text" v-model="user.email" />
+					<input class="form-control" type="text" v-model="user.email"/>
 				</div>
 				<button class="btn btn-primary" @click="submit">Submit</button>
-				<hr />
+				<hr/>
+				<hr/>
+				<input type="text" class="form-control" v-model="node"/>
+				<br/>
+				<br/>
 				<button class="btn btn-primary" @click="fetchData">Get Data</button>
-				<br />
-				<br />
+				<br/>
+				<br/>
 				<ul class="list-group">
 					<li
 						class="list-group-item"
 						v-for="user in users"
-						:key="user"
-					>{{user.username}} - {{user.email}}</li>
+						:key="user.email"
+					>{{user.username}} - {{user.email}}
+					</li>
 				</ul>
 			</div>
 		</div>
@@ -29,58 +34,79 @@
 </template>
 
 <script>
-	export default {
-		data() {
-			return {
-				user: {
-					username: "",
-					email: ""
-				},
-				users: [],
-				resource: {}
-			};
-		},
-		methods: {
-			submit() {
-				// this.$http.post('data.json', this.user)
-				//     .then(response => {
-				//         console.log(response)
-				//     }, error => {
-				//         console.log(error)
-				//     })
+    export default {
+        data() {
+            return {
+                user: {
+                    username: "",
+                    email: ""
+                },
+                users: [],
+                resource: {},
+                node: "data"
+            };
+        },
+        methods: {
+            submit() {
+                // this.$http.post('data.json', this.user)
+                //     .then(response => {
+                //         console.log(response)
+                //     }, error => {
+                //         console.log(error)
+                //     })
 
-				// this.resource.save({}, this.user);
+                // this.resource.save({}, this.user);
 
-				this.resource.saveAlter(this.user);
-			},
-			fetchData() {
-				this.$http
-					.get("data.json")
-					.then(
-						response => {
-							return response.json();
-						},
-						error => {
-							console.log(error);
-						}
-					)
-					.then(data => {
-						const resultArray = [];
-						for (let key in data) {
-							resultArray.push(data[key]);
-						}
-						this.users = resultArray;
-						console.log("users", this.users);
-					});
-			}
-		},
-		created() {
-			const customActions = {
-				saveAlter: { method: "POST", url: "alternative.json" }
-			};
-			this.resource = this.$resource("data.json", {}, customActions);
-		}
-	};
+                this.resource.saveAlter(this.user);
+            },
+            fetchData() {
+                // this.$http
+                // 	.get("data.json")
+                // 	.then(
+                // 		response => {
+                // 			return response.json();
+                // 		},
+                // 		error => {
+                // 			console.log(error);
+                // 		}
+                // 	)
+                // 	.then(data => {
+                // 		const resultArray = [];
+                // 		for (let key in data) {
+                // 			resultArray.push(data[key]);
+                // 		}
+                // 		this.users = resultArray;
+                // 		console.log("users", this.users);
+                // 	});
+
+                this.resource
+                    .getData({node: this.node})
+                    .then(
+                        response => {
+                            return response.json();
+                        },
+                        error => {
+                            console.log(error);
+                        }
+                    )
+                    .then(data => {
+                        const resultArray = [];
+                        for (let key in data) {
+                            resultArray.push(data[key]);
+                        }
+                        this.users = resultArray;
+                    });
+
+            }
+        },
+        created() {
+            const customActions = {
+                saveAlter: {method: "POST", url: "alternative.json"},
+                getData: {method: "GET"}
+            };
+            this.resource = this.$resource("{node}.json", {}, customActions);
+        }
+    };
 </script>
 
 <style>
